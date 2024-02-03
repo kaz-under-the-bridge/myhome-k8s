@@ -9,6 +9,38 @@ linkerd install --crds | kubectl apply -f -
 linkerd install --set proxyInit.runAsRoot=true | kubectl apply -f -
 ```
 
+## linkerdリソース
+```bash
+❯ k get all 
+NAME                                         READY   STATUS    RESTARTS   AGE
+pod/linkerd-destination-5d564c7c54-8kg4v     4/4     Running   0          37m
+pod/linkerd-identity-655ffd79d-z5wq4         2/2     Running   0          37m
+pod/linkerd-proxy-injector-6558bf874-7sl4h   2/2     Running   0          37m
+
+NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/linkerd-dst                 ClusterIP   10.244.154.79    <none>        8086/TCP   37m
+service/linkerd-dst-headless        ClusterIP   None             <none>        8086/TCP   37m
+service/linkerd-identity            ClusterIP   10.244.133.24    <none>        8080/TCP   37m
+service/linkerd-identity-headless   ClusterIP   None             <none>        8080/TCP   37m
+service/linkerd-policy              ClusterIP   None             <none>        8090/TCP   37m
+service/linkerd-policy-validator    ClusterIP   10.244.138.153   <none>        443/TCP    37m
+service/linkerd-proxy-injector      ClusterIP   10.244.185.1     <none>        443/TCP    37m
+service/linkerd-sp-validator        ClusterIP   10.244.93.88     <none>        443/TCP    37m
+
+NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/linkerd-destination      1/1     1            1           37m
+deployment.apps/linkerd-identity         1/1     1            1           37m
+deployment.apps/linkerd-proxy-injector   1/1     1            1           37m
+
+NAME                                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/linkerd-destination-5d564c7c54     1         1         1       37m
+replicaset.apps/linkerd-identity-655ffd79d         1         1         1       37m
+replicaset.apps/linkerd-proxy-injector-6558bf874   1         1         1       37m
+
+NAME                              SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/linkerd-heartbeat   24 12 * * *   False     0        28m             37m
+```
+
 ## demo
 参考: https://amateur-engineer-blog.com/getting-started-linkerd/
 
