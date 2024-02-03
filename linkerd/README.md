@@ -135,8 +135,8 @@ replicaset.apps/web-77b75995d         0         0         0       19m
 linkerd viz install | kubectl apply -f -
 
 linkerd viz dashboard &
-
 ```
+![ダッシュボード](../pictures/linkerd_dashboard.png)
 
 ### HTTPRouteの評価
 参考: https://zenn.dev/mikutas/articles/1e222e665e9d73
