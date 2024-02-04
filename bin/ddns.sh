@@ -15,8 +15,11 @@ if [ -z "$name" -o -z "$zone" ]; then
   exit 1
 fi
 
-record=$(gcloud dns record-sets describe $name \
-        --type "A" --zone $zone --format json | jq -r '.rrdatas | .[0]')
+gcloud=/usr/bin/gcloud
+jq=/home/linuxbrew/.linuxbrew/bin/jq
+
+record=$($gcloud dns record-sets describe $name \
+        --type "A" --zone $zone --format json | $jq -r '.rrdatas | .[0]')
 
 echo "DNS record: $record"
 
@@ -25,7 +28,7 @@ if [ "$record" == "" ]; then
   exit 1
 fi
 
-ip=$(curl -s httpbin.org/ip | jq -r '.origin')
+ip=$(curl -s httpbin.org/ip | $jq -r '.origin')
 
 echo "Outbound IP: $ip"
 
@@ -40,5 +43,5 @@ if [ "$record" == "$ip" ]; then
 fi
 
 echo "$record, $ip are different, update cloud dns record"
-gcloud dns record-sets update $name \
+$gcloud dns record-sets update $name \
       --rrdatas=$ip --type "A" --ttl=60 --zone $zone
